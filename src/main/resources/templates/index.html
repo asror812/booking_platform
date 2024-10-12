@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking.com</title>
+    <link rel="stylesheet" th:href="@{css/style.css}"  >
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+  <div class="header container">
+      <h1 class="logo">Booking.com</h1>
+  <!--    <div class="button-container">
+          <a th:href="@{/auth/sign-up}">
+            <button class="btn"> Register </button>
+          </a>
+          <a th:href="@{/auth/sign-in}">
+            <button class="btn"> Sign in </button>
+          </a>
+      </div>-->
+  </div>
+
+<div class="center-form">
+    <form class="search-form" th:action="@{/hotel}" method="get" >
+    <select class="input" name="city">
+        <option th:each="cityName: ${T(com.example.booking_platform.address.City).values}"
+                th:text="${cityName}"
+                th:value="${cityName}">
+        </option>
+    </select>
+        <input class="input" type="datetime-local" required>
+        <input class="input" type="datetime-local" required>
+        <input class="input" type="number" required>
+        <button class="btn secondary" type="submit">Search</button>
+    </form>
+</div>
+
+<div class="container"  th:if="${hotels} != null">
+    <div class="hotel-card" th:each="hotel: ${hotels}">
+      <div class="card-img">
+        <a th:href="@{/hotel/download/{id}(id = ${hotel.id})}">
+           <img th:src="@{img/{fileName}(fileName =  ${hotel.fileName})}"  alt="hello">
+        </a>
+      </div>
+
+
+        <div class="hotel-card-info" style="overflow: hidden">
+            <div class="hotel-header">
+            <h1 th:text="${hotel.name}" class="hotel-name"></h1>
+
+            <div>
+                <a th:href="@{{id}/see-rooms(id = ${hotel.id})}">
+                    <button class="btn secondary">See rooms</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="hotel-description">
+            <p th:text="${hotel.description}"></p>
+        </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!--     <a th:href="@{/hotel/{id}/rooms(id = ${hotel.id})}">
+                 <button class="btn secondary">See rooms</button>
+             </a>-->
