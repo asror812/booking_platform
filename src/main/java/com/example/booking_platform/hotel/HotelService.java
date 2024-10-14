@@ -6,9 +6,9 @@ import com.example.booking_platform.amentity.HotelAmenity;
 import com.example.booking_platform.amentity.HotelAmenityRepository;
 import com.example.booking_platform.exception.SpringMVCException;
 import com.example.booking_platform.hotel.dto.*;
+import com.example.booking_platform.room.RoomRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -34,7 +34,7 @@ public class HotelService {
     private final ModelMapper modelMapper;
     private final HotelRepository hotelRepository;
     private final HotelAmenityRepository hotelAmenityRepository;
-
+    private final RoomRepository roomRepository;
 
 
     @Transactional
@@ -138,7 +138,36 @@ public class HotelService {
                 .toList();
     }
 
-    public void searchHotels(HotelSearchDTOForAdmin dto) {
+    public List<HotelResponseDTO> searchHotels(Long id , City city , String name , boolean petsAllowed) {
+          List<Hotel> hotels = hotelRepository.searchHotel();
 
+          return hotels.stream().map(h -> modelMapper.map(h , HotelResponseDTO.class))
+                  .toList();
+    }
+
+    public void removeAmenity(Long hotelId , Integer amenityId) {
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(
+                        () -> new SpringMVCException.EntityNotFoundException("Hotel", hotelId.toString()));
+
+
+        HotelAmenity amenity = hotelAmenityRepository.findById(amenityId)
+                .orElseThrow(() -> new SpringMVCException.EntityNotFoundException("Amenity", amenityId.toString()));
+
+        hotel.getAmenities().removeIf(a -> a.getId().equals(amenityId));
+        amenity.getHotels().removeIf(h -> h.getId().equals(hotelId));
+
+        hotelAmenityRepository.save(amenity);
+        hotelRepository.save(hotel);
+    }
+
+    public void deleteRoom(Long hotelId, UUID roomId) {
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(
+                        () -> new SpringMVCException.EntityNotFoundException("Hotel", hotelId.toString()));
+
+        hotel.getRooms().removeIf(r -> r.getId().equals(roomId));
+
+        hotelRepository.save(hotel);
     }
 }

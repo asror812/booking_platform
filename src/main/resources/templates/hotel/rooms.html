@@ -7,11 +7,21 @@
     <link rel="shortcut icon" href="#">
 </head>
 <body>
+
     <div class="header container">
       <h1 class="logo">Booking.com</h1>
       <div></div>
     </div>
+
     <div class="container">
+       <!-- <div class="hotel-image">
+        <img th:src="@{../../img/{fileName}(fileName =  ${hotel.fileName})}"  alt="hello">
+        </div>-->
+<!--    <div class="container" th:text="${hotel.description}">
+        <div class="hotel-description" th:text="${hotel.description}" >
+        </div>
+    </div>-->
+
       <table>
         <tr>
           <th>Type</th>
@@ -26,9 +36,10 @@
           <td th:text="${room_type.capacity}"></td>
           <td th:text="${room_type.pricePerDay}"></td>
           <td th:text="${room_type.amenities}"></td>
-
         </tr>
       </table>
-    </div>
+
+</div>
+
 </body>
 </html>

@@ -128,7 +128,6 @@ public class LoadData implements CommandLineRunner {
 
             int i = 1;
             for (Hotel hotel : hotels) {
-
                 RoomType roomType1 = new RoomType(null, "Classic" ,"Classic Room, featuring 1 Queen Bed and 1 Single Bed, ideal for small families", 2, 50_000L, Collections.emptyList(), Collections.emptyList(), hotel);
                 RoomType roomType2 = new RoomType(null, "Deluxe" ,"Deluxe Room, with 1 King Bed and 2 Single Beds, perfect for families seeking extra space and comfort." ,  4, 100_000L, Collections.emptyList(), Collections.emptyList(), hotel);
                 RoomType roomType3 = new RoomType(null, "Executive" , "Executive Suite, with 2 King Beds and a Sofa Bed, offering luxury and space for larger groups.", 6, 200_000L, Collections.emptyList(), Collections.emptyList(), hotel);

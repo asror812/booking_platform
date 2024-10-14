@@ -2,6 +2,7 @@ package com.example.booking_platform.hotel;
 
 
 
+import com.example.booking_platform.address.City;
 import com.example.booking_platform.amentity.HotelAmenityService;
 import com.example.booking_platform.hotel.dto.*;
 import com.example.booking_platform.room.RoomService;
@@ -126,12 +127,39 @@ public class HotelController {
     }
 
 
+    @DeleteMapping("/hotel/remove-amenity")
+    public String removeAmenity(@RequestParam(name = "hotelId") Long hotelId ,
+                                @RequestParam(name = "amenityId") Integer amenityId) {
+
+           hotelService.removeAmenity(hotelId , amenityId);
+
+
+           return "redirect:/hotel/%s/add-amenity".formatted(hotelId);
+    }
+
+    @DeleteMapping("/hotel/delete-room")
+    public String deleteRoom(@RequestParam(name = "hotelId") Long hotelId,
+                             @RequestParam(name = "roomId") UUID roomId) {
+
+        hotelService.deleteRoom(hotelId , roomId);
+
+        return "redirect:/%s/update".formatted(hotelId);
+    }
+
+
     @PostMapping("/hotel/search")
-    public String searchForAdmin(@Valid @ModelAttribute HotelSearchDTOForAdmin dto){
+    public String searchForAdmin(@RequestParam(name = "id") Long id,
+                                 @RequestParam(name = "city") City city,
+                                 @RequestParam(name = "name") String name,
+                                 @RequestParam(name = "petsAllowed") boolean petsAllowed,
+                                 Model model){
 
-        hotelService.searchHotels(dto);
 
-        return
+        List<HotelResponseDTO> hotels = hotelService.searchHotels(id , city , name , petsAllowed);
+
+        model.addAttribute("hotels" , hotels);
+
+        return "hotel/search";
     }
 
 

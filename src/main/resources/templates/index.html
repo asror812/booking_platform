@@ -27,9 +27,13 @@
                 th:value="${cityName}">
         </option>
     </select>
-        <input class="input" type="datetime-local" required>
-        <input class="input" type="datetime-local" required>
-        <input class="input" type="number" required>
+        <input class="input" type="date"  required >
+        <input class="input" type="date"  required>
+        <input class="input" type="number" placeholder="Number of people" required>
+        <select class="input" name="petsAllowed" >
+            <option th:value="true">Pets allowed</option>
+            <option th:value="false">Pets not allowed</option>
+        </select>
         <button class="btn secondary" type="submit">Search</button>
     </form>
 </div>
@@ -41,7 +45,6 @@
            <img th:src="@{img/{fileName}(fileName =  ${hotel.fileName})}"  alt="hello">
         </a>
       </div>
-
 
         <div class="hotel-card-info" style="overflow: hidden">
             <div class="hotel-header">

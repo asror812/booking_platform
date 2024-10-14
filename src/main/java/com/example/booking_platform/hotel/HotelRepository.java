@@ -13,11 +13,10 @@ import java.util.UUID;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel , Long> {
 
-    Optional<Hotel> findByName(String name);
-
-
     @Query("SELECT h FROM Hotel h LEFT JOIN FETCH h.amenities")
     List<Hotel> getThreeHotels(Pageable pageable) ;
 
-    
+
+    @Query(value = "SELECT * FROM hotel h WHERE ()" , nativeQuery = true)
+    List<Hotel> searchHotel();
 }
