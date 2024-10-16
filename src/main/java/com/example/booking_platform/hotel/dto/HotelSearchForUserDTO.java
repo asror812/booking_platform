@@ -18,6 +18,6 @@ public class HotelSearchForUserDTO {
 
     private City city;
 
-    private boolean petsAllowed;
+    private Boolean petsAllowed;
 
 }

@@ -138,8 +138,10 @@ public class HotelService {
                 .toList();
     }
 
-    public List<HotelResponseDTO> searchHotels(Long id , City city , String name , boolean petsAllowed) {
-          List<Hotel> hotels = hotelRepository.searchHotel();
+    public List<HotelResponseDTO> searchHotels(HotelSearchForUserDTO dto) {
+
+        System.out.print("Hello world!");
+          List<Hotel> hotels = hotelRepository.searchHotel(dto.getId(), dto.getCity() , dto.getName() , dto.getPetsAllowed());
 
           return hotels.stream().map(h -> modelMapper.map(h , HotelResponseDTO.class))
                   .toList();

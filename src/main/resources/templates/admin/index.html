@@ -16,8 +16,8 @@
       </div>
   </div>
 <div class="center-form">
-    <form class="search-form" th:action="@{/hotel}" method="get" >
-        <input class="input" type="text" name="id" placeholder="Id">
+    <form class="search-form" th:action="@{/hotel/search}" th:method="post" >
+        <input class="input" type="number" name="id" placeholder="Id">
         <input class="input" type="text" name="name" placeholder="Name">
         <label>
             <select class="input" name="city">
@@ -29,8 +29,8 @@
         </label>
         <label>
             <select class="input" name="petsAllowed">
-                <option th:value="${true}">Pets allowed</option>
-                <option th:value="${false}">Pets not allowed</option>
+                <option th:value="true">Pets allowed</option>
+                <option th:value="false">Pets not allowed</option>
             </select>
         </label>
         <button class="btn secondary" type="submit">Search</button>

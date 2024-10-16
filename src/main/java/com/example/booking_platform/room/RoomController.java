@@ -27,7 +27,7 @@ public class RoomController {
 
 
     @PostMapping("/room")
-    public String createRoom(@ModelAttribute @Valid RoomCreateDTO roomCreateDTO , Model model) {
+    public String createRoom(@ModelAttribute @Valid RoomCreateDTO roomCreateDTO) {
        roomService.create(roomCreateDTO);
        return "redirect:/%s/update".formatted(roomCreateDTO.getHotelId());
    }

@@ -11,8 +11,6 @@ import com.example.booking_platform.room.dto.RoomTypeResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -148,14 +146,11 @@ public class HotelController {
 
 
     @PostMapping("/hotel/search")
-    public String searchForAdmin(@RequestParam(name = "id") Long id,
-                                 @RequestParam(name = "city") City city,
-                                 @RequestParam(name = "name") String name,
-                                 @RequestParam(name = "petsAllowed") boolean petsAllowed,
+    public String searchForAdmin(@ModelAttribute HotelSearchForUserDTO dto ,
                                  Model model){
 
 
-        List<HotelResponseDTO> hotels = hotelService.searchHotels(id , city , name , petsAllowed);
+        List<HotelResponseDTO> hotels = hotelService.searchHotels(dto);
 
         model.addAttribute("hotels" , hotels);
 
