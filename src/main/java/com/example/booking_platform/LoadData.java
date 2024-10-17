@@ -1,17 +1,9 @@
 package com.example.booking_platform;
 
 import com.example.booking_platform.address.City;
-import com.example.booking_platform.amentity.HotelAmenity;
-import com.example.booking_platform.amentity.HotelAmenityRepository;
-import com.example.booking_platform.hotel.Hotel;
-import com.example.booking_platform.hotel.HotelRepository;
-import com.example.booking_platform.room.*;
-import com.example.booking_platform.room.bed.Bed;
-import com.example.booking_platform.room.bed.BedRepository;
-import com.example.booking_platform.user.User;
-import com.example.booking_platform.user.UserRepository;
-import com.example.booking_platform.user.role.Role;
-import com.example.booking_platform.user.role.RoleRepository;
+import com.example.booking_platform.model.*;
+import com.example.booking_platform.repository.*;
+import com.example.booking_platform.model.User;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
