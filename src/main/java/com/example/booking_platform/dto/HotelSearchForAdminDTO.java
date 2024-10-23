@@ -19,6 +19,6 @@ public class HotelSearchForAdminDTO {
 
     private City city;
 
-    private boolean petsAllowed;
+    private Boolean petsAllowed;
 
 }

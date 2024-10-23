@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
                     request
-                            .requestMatchers("/login", "/register",  "css/**")
+                            .requestMatchers("/favicon.ico", "/login", "/register",  "css/**")
                             .permitAll()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .anyRequest().authenticated();

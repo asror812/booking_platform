@@ -143,7 +143,7 @@ public class HotelController {
     }
 
 
-    /*    @PostMapping("/hotel/search")
+        @PostMapping("/hotel/search")
         public String searchForAdmin(@ModelAttribute HotelSearchForAdminDTO dto ,
                                      Model model){
 
@@ -152,7 +152,7 @@ public class HotelController {
             model.addAttribute("hotels" , hotels);
 
             return "hotel/search";
-        }*/
+        }
 
 
 

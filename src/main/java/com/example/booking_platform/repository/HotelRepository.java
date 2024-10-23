@@ -20,8 +20,8 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
         @Query(value = "SELECT * FROM public.hotel h " +
                "WHERE (:id IS NULL OR h.id = :id) " +
-                "AND (:city IS NULL OR h.city = :city) " +
-                "AND (:name IS NULL OR h.name = :name)" +
+                "AND (:city IS NULL OR h.city LIKE :city + '%') " +
+                "AND (:name IS NULL OR h.name LIKE :name + '%')" +
                 "AND (:petsAllowed IS NULL OR h.pets_allowed = :petsAllowed)" ,
                 nativeQuery = true)
         List<Hotel> searchHotel(@Param("id") Long id , @Param("city") String city ,

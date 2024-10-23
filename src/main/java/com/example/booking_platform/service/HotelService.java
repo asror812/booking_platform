@@ -141,16 +141,16 @@ public class HotelService {
                 .toList();
     }
 
- /*   public List<HotelResponseDTO> searchHotels(HotelSearchForAdminDTO dto) {
+    public List<HotelResponseDTO> searchHotels(HotelSearchForAdminDTO dto) {
 
-        System.out.print("Hello world!");
-        List<Hotel> hotels = hotelRepository.searchHotel(dto.getId(), dto.getCity().name() , dto.getName() );
+        List<Hotel> hotels = hotelRepository
+                .searchHotel(dto.getId(), dto.getCity().name() , dto.getName()  , dto.getPetsAllowed());
 
         return hotels
                 .stream()
                 .map(h -> modelMapper.map(h , HotelResponseDTO.class))
                 .toList();
-    }*/
+    }
 
     public void removeAmenity(Long hotelId , Integer amenityId) {
         Hotel hotel = hotelRepository.findById(hotelId)
