@@ -138,24 +138,21 @@ public class HotelController {
     @DeleteMapping("/hotel/delete-room")
     public String deleteRoom(@RequestParam(name = "hotelId") Long hotelId,
                              @RequestParam(name = "roomId") UUID roomId) {
-
         hotelService.deleteRoom(hotelId , roomId);
-
         return "redirect:/%s/update".formatted(hotelId);
     }
 
 
-    @PostMapping("/hotel/search")
-    public String searchForAdmin(@ModelAttribute HotelSearchForUserDTO dto ,
-                                 Model model){
+    /*    @PostMapping("/hotel/search")
+        public String searchForAdmin(@ModelAttribute HotelSearchForAdminDTO dto ,
+                                     Model model){
 
+            List<HotelResponseDTO> hotels = hotelService.searchHotels(dto);
 
-        List<HotelResponseDTO> hotels = hotelService.searchHotels(dto);
+            model.addAttribute("hotels" , hotels);
 
-        model.addAttribute("hotels" , hotels);
-
-        return "hotel/search";
-    }
+            return "hotel/search";
+        }*/
 
 
 

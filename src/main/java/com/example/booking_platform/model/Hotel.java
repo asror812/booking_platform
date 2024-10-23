@@ -1,7 +1,7 @@
 package com.example.booking_platform.model;
 
 
-import com.example.booking_platform.address.City;
+import com.example.booking_platform.enums.City;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

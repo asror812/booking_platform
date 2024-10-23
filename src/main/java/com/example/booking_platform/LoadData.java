@@ -1,6 +1,6 @@
 package com.example.booking_platform;
 
-import com.example.booking_platform.address.City;
+import com.example.booking_platform.enums.City;
 import com.example.booking_platform.model.*;
 import com.example.booking_platform.repository.*;
 import com.example.booking_platform.model.User;

@@ -1,7 +1,8 @@
 package com.example.booking_platform.service;
 
 
-import com.example.booking_platform.address.City;
+
+import com.example.booking_platform.enums.City;
 import com.example.booking_platform.model.HotelAmenity;
 import com.example.booking_platform.repository.HotelAmenityRepository;
 import com.example.booking_platform.dto.*;
@@ -140,14 +141,16 @@ public class HotelService {
                 .toList();
     }
 
-    public List<HotelResponseDTO> searchHotels(HotelSearchForUserDTO dto) {
+ /*   public List<HotelResponseDTO> searchHotels(HotelSearchForAdminDTO dto) {
 
         System.out.print("Hello world!");
-          List<Hotel> hotels = hotelRepository.searchHotel(dto.getId(), dto.getCity() , dto.getName() , dto.getPetsAllowed());
+        List<Hotel> hotels = hotelRepository.searchHotel(dto.getId(), dto.getCity().name() , dto.getName() );
 
-          return hotels.stream().map(h -> modelMapper.map(h , HotelResponseDTO.class))
-                  .toList();
-    }
+        return hotels
+                .stream()
+                .map(h -> modelMapper.map(h , HotelResponseDTO.class))
+                .toList();
+    }*/
 
     public void removeAmenity(Long hotelId , Integer amenityId) {
         Hotel hotel = hotelRepository.findById(hotelId)

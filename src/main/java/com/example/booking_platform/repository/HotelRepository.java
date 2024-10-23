@@ -1,7 +1,7 @@
 package com.example.booking_platform.repository;
 
 
-import com.example.booking_platform.address.City;
+import com.example.booking_platform.enums.City;
 import com.example.booking_platform.model.Hotel;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,12 +18,12 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
     List<Hotel> getThreeHotels(Pageable pageable) ;
 
 
-        @Query(value = "SELECT * FROM hotel h " +
-               "WHERE (:id is null OR h.id = :id) " +
-                "AND (:city is null OR h.city = :city) " +
-                "AND (:name is null OR h.name = :name)" +
-                "AND (:petsAllowed is null OR h.pets_allowed = :petsAllowed)" ,
+        @Query(value = "SELECT * FROM public.hotel h " +
+               "WHERE (:id IS NULL OR h.id = :id) " +
+                "AND (:city IS NULL OR h.city = :city) " +
+                "AND (:name IS NULL OR h.name = :name)" +
+                "AND (:petsAllowed IS NULL OR h.pets_allowed = :petsAllowed)" ,
                 nativeQuery = true)
-        List<Hotel> searchHotel(@Param("id") Long id , @Param("city") City city ,
+        List<Hotel> searchHotel(@Param("id") Long id , @Param("city") String city ,
                                 @Param("name") String name ,@Param("petsAllowed") Boolean petsAllowed);
 }

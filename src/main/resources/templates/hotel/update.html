@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Booking.com</title>
     <link rel="stylesheet" th:href="@{../../css/style.css}"  href="../../static/css/style.css">
-    <link rel="shortcut icon" href="#">
 </head>
 <body>
 <div class="header container">
@@ -14,7 +13,7 @@
        <div class="center-form">
            <form class="search-form" th:action="@{'/' + ${hotel.id}}" th:method="put">
                <select  class="input" name="city" th:value="${hotel.city}" required>
-                   <option th:each="cityName: ${T(com.example.booking_platform.address.City).values()}"
+                   <option th:each="cityName: ${T(com.example.booking_platform.enums.City).values()}"
                        th:text="${cityName}"
                        th:value="${cityName}"
                        th:selected="${cityName == hotel.city}">>

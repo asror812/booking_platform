@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Booking.com</title>
-    <link rel="stylesheet" th:href="@{css/style.css}"  >
-    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" th:href="@{css/style.css}" href="../static/css/style.css">
 </head>
 <body>
   <div class="header container">
@@ -22,7 +21,7 @@
 <div class="center-form">
     <form class="search-form" th:action="@{/hotel}" method="get" >
     <select class="input" name="city">
-        <option th:each="cityName: ${T(com.example.booking_platform.address.City).values}"
+        <option th:each="cityName: ${T(com.example.booking_platform.enums.City).values}"
                 th:text="${cityName}"
                 th:value="${cityName}">
         </option>

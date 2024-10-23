@@ -21,7 +21,7 @@
         <input class="input" type="text" name="name" placeholder="Name">
         <label>
             <select class="input" name="city">
-                <option th:each="cityName: ${T(com.example.booking_platform.address.City).values}"
+                <option th:each="cityName: ${T(com.example.booking_platform.enums.City).values}"
                         th:text="${cityName}"
                         th:value="${cityName}">
                 </option>

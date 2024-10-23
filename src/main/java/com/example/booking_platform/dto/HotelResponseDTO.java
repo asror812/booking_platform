@@ -1,7 +1,7 @@
 package com.example.booking_platform.dto;
 
 
-import com.example.booking_platform.address.City;
+import com.example.booking_platform.enums.City;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
