@@ -41,7 +41,7 @@ public class Hotel {
     private String description;
 
     @Column(name = "pets_allowed")
-    private boolean petsAllowed;
+    private Boolean petsAllowed;
 
     private String fileName;
 

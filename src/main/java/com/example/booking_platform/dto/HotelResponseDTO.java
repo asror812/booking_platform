@@ -33,6 +33,8 @@ public class HotelResponseDTO {
     @NotBlank
     private String fileName;
 
+    private Boolean petsAllowed;
+
     private List<RoomResponseDTO> rooms;
 
     private List<HotelAmenityResponseDTO> amenities;
