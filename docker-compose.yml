@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+    image: asrordev/booking_platform:0.0.1
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/booking
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    image: postgres:17.0
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB:  booking
+    ports:
+      - "5432:5432"
+
