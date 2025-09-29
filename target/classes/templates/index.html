@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Booking.com</title>
+    <link rel="stylesheet" th:href="@{../css/style.css}"
+      href="../static/css/style.css">
+
+  </head>
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <body>
+
+    <div class="header">
+      <div class="container">
+        <p class="site-name">Booking.com</p>
+
+        <div class="btn-container">
+          <p class="concurrency">
+            UZS
+          </p>
+
+          <button class="btn btn-icon">
+            <img th:src="@{/img/usa.png}" alt="flag icon not seen" class="icon">
+          </button>
+
+          <button class="btn btn-icon">
+            <img th:src="@{/img/question-sign.png}" class="icon"
+              alt="contact icon not seen">
+          </button>
+
+          <button class="btn btn-secondary">
+            List your property
+          </button>
+
+          <button class="btn btn-small btn-primary">
+            Register
+          </button>
+
+          <button class="btn btn-small btn-primary">
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <div class="container">
+
+        <button class="nav-btn stays-btn">
+          <img th:src="@{/img/bed.png}" alt="Stays icon" class="nav-icon">
+          <span class="nav-label">Stays</span>
+        </button>
+
+        <button class="nav-btn flights-btn">
+          <img th:src="@{/img/airplane.png}" alt="Flights icon"
+            class="nav-icon">
+          <span class="nav-label">Flights</span>
+        </button>
+
+        <button class="nav-btn car-btn">
+          <img th:src="@{/img/transport.png}" alt="Car rental icon"
+            class="nav-icon">
+          <span class="nav-label">Car Rental</span>
+        </button>
+
+        <button class="nav-btn taxi-btn">
+          <img th:src="@{/img/taxi.png}" alt="Airport taxi icon"
+            class="nav-icon">
+          <span class="nav-label">Airport Taxis</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="banner">
+      <div class="container">
+        <p class="hero-title">Find your next stay</p>
+        <p class="hero-subtitle">
+          Search deals on hotels, homes, and much more...
+        </p>
+      </div>
+    </div>
+
+    <form th:action="@{/search}" method="get" class="search-bar">
+      <div class="search-items">
+        <div class="search-items-scroll">
+
+          <div class="search-item">
+            <img th:src="@{/img/bed.png}" alt="bed icon" class="icon">
+            <select name="cityId" class="destination-select" required>
+              <option value disabled selected>Where are you going?</option>
+              <option th:each="city: ${cities}"
+                th:value="${city.id}"
+                th:text="${city.name}">
+              </option>
+            </select>
+          </div>
+
+          <div class="search-item">
+            <img th:src="@{/img/calendar.png}" alt="calendar icon" class="icon">
+            <input type="text" class="date-input" id="datePicker1"
+              name="checkIn" required placeholder="dd-MM-yyyy">
+          </div>
+
+          <div class="search-item">
+            <img th:src="@{/img/calendar.png}" alt="calendar icon" class="icon">
+            <input type="text" class="date-input" id="datePicker2"
+              name="checkOut" required placeholder="dd-MM-yyyy">
+          </div>
+
+          <div class="search-item">
+            <img th:src="@{/img/user.png}" alt="user icon" class="icon">
+            <input type="text" name="guests" id="guestInput"
+              value="2 adults · 0 children · 1 room"
+              readonly onclick="toggleGuestDropdown()">
+
+            <div class="guest-dropdown" id="guestDropdown">
+              <div class="guest-item">
+                <span>Adults</span>
+                <div class="guest-controls">
+                  <button type="button" onclick="decrement('adults')">-</button>
+                  <span id="adultsCount">2</span>
+                  <button type="button" onclick="increment('adults')">+</button>
+                </div>
+              </div>
+
+              <div class="guest-item">
+                <span>Children</span>
+                <div class="guest-controls">
+                  <button type="button"
+                    onclick="decrement('children')">-</button>
+                  <span id="childrenCount">0</span>
+                  <button type="button"
+                    onclick="increment('children')">+</button>
+                </div>
+              </div>
+
+              <button type="button" class="done-btn"
+                onclick="closeGuestDropdown()">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="search-btn">Search</button>
+    </form>
+
+    <section class="why-section">
+      <div class="why-header">
+        <h2 class="why-title">Why Booking.com?</h2>
+      </div>
+
+      <div class="cards">
+
+        <article class="card">
+          <div class="icon-wrap">
+            <img th:src="@{/img/note.png}" alt aria-hidden="true">
+          </div>
+          <div class="content">
+            <h3 class="title">Book now, pay at the property</h3>
+            <p class="subtitle">FREE cancellation on most rooms</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon-wrap">
+            <img th:src="@{/img/perfect.png}" alt aria-hidden="true">
+          </div>
+          <div class="content">
+            <h3 class="title">300M+ reviews from fellow
+              travellers</h3>
+            <p class="subtitle">Get trusted information from guests like
+              you</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon-wrap">
+            <img th:src="@{/img/globus.png}" alt aria-hidden="true">
+          </div>
+          <div class="content">
+            <h3 class="title">2+ million properties worldwide</h3>
+            <p class="subtitle">Hotels, guest houses, apartments, and
+              more…</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon-wrap">
+            <img th:src="@{/img/phone.png}">
+          </div>
+          <div class="content">
+            <h3 class="title">Trusted customer service you can rely on,
+              24/7
+            </h3>
+            <p class="subtitle">We're always here to help</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="trending-section">
+      <div class="trending-header">
+        <h2 class="trending-title">Trending destinations</h2>
+        <p>Most popular choices for travellers from Uzbekistan</p>
+      </div>
+
+      <div class="cards grid-2">
+        <div class="card">
+          <img th:src="@{/img/tashkent.png}" alt="Tashkent image"
+            class="card-img">
+          <div class="overlay">
+            <span class="city-name">Tashkent</span>
+            <img th:src="@{/img/uzbekistan.png}" alt="Uzbekistan flag"
+              class="flag-icon">
+          </div>
+        </div>
+
+        <div class="card">
+          <img th:src="@{/img/samarkand.png}" alt="Samarkand image"
+            class="card-img">
+          <div class="overlay">
+            <span class="city-name">Samarkand</span>
+            <img th:src="@{/img/uzbekistan.png}" alt="Uzbekistan flag"
+              class="flag-icon">
+          </div>
+        </div>
+      </div>
+
+      <div class="cards grid-3">
+
+        <div class="card">
+          <img th:src="@{/img/buxoro.png}" alt="Bukhara image"
+            class="card-img">
+          <div class="overlay">
+            <span class="city-name">Bukhara</span>
+            <img th:src="@{/img/uzbekistan.png}" alt="Uzbekistan flag"
+              class="flag-icon">
+          </div>
+        </div>
+
+        <div class="card">
+          <img th:src="@{/img/istanbul.png}" alt="Istanbul image"
+            class="card-img">
+          <div class="overlay">
+            <span class="city-name">Istanbul</span>
+            <img th:src="@{/img/turkey.png}" alt="Turkey flag"
+              class="flag-icon">
+          </div>
+        </div>
+
+        <div class="card">
+          <img th:src="@{/img/dubai.png}" alt="Dubai image"
+            class="card-img">
+
+          <div class="overlay">
+            <span class="city-name">Dubai</span>
+            <img th:src="@{/img/united-arab-emirates.png}" alt="UAE flag"
+              class="flag-icon">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="explore-section">
+      <div class="explore-header">
+        <h2 class="explore-title">Explore Uzbekistan</h2>
+        <p>These popular destinations have a lot to offer</p>
+      </div>
+
+      <div class="explore-container">
+
+        <div class="explore-wrapper" id="exploreWrapper">
+          <div class="explore-card" th:each="summary : ${summaries}">
+            <img th:src="@{${summary.imageUrl}}">
+            <div class="explore-card-content">
+              <h3 th:text="${summary.name}">City</h3>
+              <p th:text="${summary.hotelCount + ' properties'}"></p>
+            </div>
+          </div>
+        </div>
+        <button class="arrow left" id="exploreLeft">&#8249;</button>
+        <button class="arrow right" id="exploreRight">&#8250;</button>
+      </div>
+    </section>
+
+    <script th:src="@{/js/explore.js}"></script>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Coronavirus (COVID-19) FAQs</a></li>
+            <li><a href="#">Manage your trips</a></li>
+            <li><a href="#">Contact Customer Service</a></li>
+            <li><a href="#">Our COVID-19 Response</a></li>
+            <li><a href="#">Safety Resource Center</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Discover</h4>
+          <ul>
+            <li><a href="#">Genius loyalty program</a></li>
+            <li><a href="#">Seasonal and holiday deals</a></li>
+            <li><a href="#">Travel articles</a></li>
+            <li><a href="#">Booking.com for Business</a></li>
+            <li><a href="#">Traveller Review Awards</a></li>
+            <li><a href="#">Car rental</a></li>
+            <li><a href="#">Flight finder</a></li>
+            <li><a href="#">Restaurant reservations</a></li>
+            <li><a href="#">Booking.com for Travel Agents</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Terms and settings</h4>
+          <ul>
+            <li><a href="#">Privacy & cookies</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Accessibility Statement</a></li>
+            <li><a href="#">Partner dispute</a></li>
+            <li><a href="#">Modern Slavery Statement</a></li>
+            <li><a href="#">Human Rights Statement</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Partners</h4>
+          <ul>
+            <li><a href="#">Extranet login</a></li>
+            <li><a href="#">Partner help</a></li>
+            <li><a href="#">List your property</a></li>
+            <li><a href="#">Become an affiliate</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>About</h4>
+          <ul>
+            <li><a href="#">About Booking.com</a></li>
+            <li><a href="#">How We Work</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Press center</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Investor relations</a></li>
+            <li><a href="#">Corporate contact</a></li>
+            <li><a href="#">Content guidelines and reporting</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-lang">
+          <img src="https://flagcdn.com/us.svg" alt="US Flag"
+            class="flag" />
+          <span>UZS</span>
+        </div>
+        <p>
+          Booking.com is part of Booking Holdings Inc., the world leader
+          in
+          online
+          travel and related services. <br />
+          Copyright © 1996–2025 Booking.com™. All rights reserved.
+        </p>
+
+        <div class="footer-logos">
+          <img
+            th:src="@{/img/google.png}"
+            alt="Google" />
+          <img
+            th:src="@{/img/apple.png}"
+            alt="Apple" />
+          <img
+            th:src="@{/img/yandex.png}"
+            alt="Yandex" />
+          <img
+            th:src="@{/img/facebook.png}"
+            alt="Facebook" />
+          <img
+            th:src="@{/img/meta.png}"
+            alt="Meta" />
+        </div>
+
+      </div>
+    </footer>
+
+    <script>
+      let counts = { adults: 2, children: 0, rooms: 1 };
+
+      function toggleGuestDropdown() {
+        document.getElementById('guestDropdown').style.display =
+          document.getElementById('guestDropdown').style.display === 'block'
+            ? 'none' : 'block';
+      }
+
+      function closeGuestDropdown() {
+        document.getElementById('guestDropdown').style.display = 'none';
+      }
+
+      function increment(type) {
+        counts[type]++;
+        updateDisplay();
+      }
+
+      function decrement(type) {
+        if (counts[type] > 0) {
+          counts[type]--;
+          updateDisplay();
+        }
+      }
+
+      function updateDisplay() {
+        document.getElementById('adultsCount').textContent = counts.adults;
+        document.getElementById('childrenCount').textContent = counts.children;
+
+        document.getElementById('guestInput').value =
+          `${counts.adults} adults · ${counts.children} children`;
+      }
+
+    </script>
+
+  </body>
+</html>

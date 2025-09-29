@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../css/style.css}"  href="../../static/css/style.css">
+</head>
+<body>
+<div class="header container">
+<h1 class="logo">Booking.com</h1>
+<div></div>
+</div>
+
+<div class="container">
+    <table>
+        <tr>
+            <th th:text="${hotel.id}"></th>
+            <th th:text="${hotel.name}"></th>
+            <th th:text="${hotel.city}"></th>
+        </tr>
+    </table>
+</div>
+
+
+<div class="center-form">
+    <form class="search-form" th:action="@{/hotel/add-amenity}" th:method="post">
+
+        <select  class="input" name="amenityId" >
+            <option th:each="amenity: ${amenities}"
+                    th:text="${amenity.name}  + '  -  ' +   ${amenity.additionalCost}"
+                    th:value="${amenity.id}">
+            </option>
+        </select>
+
+        <button class="btn secondary" type="submit"
+                th:name="hotelId" th:value="${hotel.id}">Add amenity</button>
+    </form>
+</div>
+
+<div class="container">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Is free</th>
+            <th>Additional Cost</th>
+            <th>
+                Remove
+            </th>
+        </tr>
+        <tr th:each="amenity : ${hotel.amenities}">
+            <td th:text="${amenity.id}"></td>
+            <td th:text="${amenity.name}"></td>
+            <td th:text="${amenity.free}"></td>
+            <td th:text="${amenity.additionalCost} + ' $' "></td>
+            <td>
+                <form th:action="@{/hotel/remove-amenity}" th:method="delete">
+                    <input type="hidden" th:name="hotelId" th:value="${hotel.id}">
+                    <input type="hidden" th:name="amenityId" th:value="${amenity.id}">
+                    <button class="btn secondary" type="submit"> Remove </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
