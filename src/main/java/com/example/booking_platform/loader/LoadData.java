@@ -37,20 +37,15 @@ public class LoadData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         createRoomFacilities();
-
         createCities();
 
         createHotels();
-
         createRoomTypes();
-
         createHotelFacilities();
-        /*  */
+        createHotelImages();
 
         createRoles();
         createUsers();
-
-        createHotelImages();
     }
 
     @Transactional
@@ -187,7 +182,6 @@ public class LoadData implements CommandLineRunner {
                 beds.addAll(createBedsForRoomTypes(roomType1, roomType2, roomType3));
             }
 
-            // Save all entities in batch
             roomTypeRepository.saveAll(roomTypes);
             bedRepository.saveAll(beds);
 
