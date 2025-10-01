@@ -53,6 +53,41 @@ public class LoadData implements CommandLineRunner {
         createHotelImages();
     }
 
+    @Transactional
+    private void createHotelImages() {
+        if (hotelImageRepository.count() == 0) {
+            List<Hotel> hotels = hotelRepository.findAllWithImagesAndFacilities();
+
+            List<String> imagePaths = List.of(
+                    "/img/1.webp", "/img/2.webp", "/img/3.webp",
+                    "/img/4.webp", "/img/5.webp", "/img/6.webp",
+                    "/img/7.webp", "/img/8.webp", "/img/9.webp");
+
+            List<HotelImage> allImages = new ArrayList<>();
+
+            int imgIndex = 0;
+
+            for (Hotel hotel : hotels) {
+                List<HotelImage> hotelImages = new ArrayList<>();
+
+                for (int i = 0; i < 10; i++) {
+                    String path = imagePaths.get(imgIndex % imagePaths.size());
+                    boolean isMain = (i == 0);
+
+                    HotelImage hotelImage = new HotelImage(null, path, isMain, hotel);
+                    hotelImages.add(hotelImage);
+                    imgIndex++;
+                }
+
+                hotel.getImages().addAll(hotelImages);
+                allImages.addAll(hotelImages);
+            }
+
+            hotelImageRepository.saveAll(allImages);
+            hotelRepository.saveAll(hotels);
+        }
+    }
+
     private void createCities() {
         if (cityRepository.count() == 0) {
             City andijon = new City(null, "Andijon", "andijon", "/img/andijon.png",
@@ -90,78 +125,6 @@ public class LoadData implements CommandLineRunner {
 
     }
 
-    /*
-     * public void createRoomTypes() {
-     * if (roomTypeRepository.count() == 0) {
-     * 
-     * List<RoomFacility> roomFacilities = roomFacilityRepository.findAll();
-     * 
-     * RoomType roomType1 = new RoomType(null, "Delux Single Room", 3, 500_000l,
-     * roomFacilities,
-     * Collections.emptyList(),
-     * Collections.emptyList(), null);
-     * 
-     * RoomType roomType2 = new RoomType(null, "Delux Double Room", 3, 500_000l,
-     * roomFacilities,
-     * Collections.emptyList(),
-     * Collections.emptyList(), null);
-     * 
-     * roomTypeRepository.saveAll(List.of(roomType1, roomType2));
-     * }
-     * }
-     */
-
-    @Transactional
-    private void createHotelImages() {
-
-        if (hotelImageRepository.count() == 0) {
-            HotelImage image1 = new HotelImage(null, "/img/1.webp", true, null);
-            HotelImage image2 = new HotelImage(null, "/img/2.webp", false, null);
-
-            HotelImage image3 = new HotelImage(null, "/img/3.webp", true, null);
-            HotelImage image4 = new HotelImage(null, "/img/4.webp", false, null);
-
-            HotelImage image5 = new HotelImage(null, "/img/5.webp", true, null);
-            HotelImage image6 = new HotelImage(null, "/img/6.webp", false, null);
-
-            HotelImage image7 = new HotelImage(null, "/img/7.webp", true, null);
-
-            HotelImage image8 = new HotelImage(null, "/img/8.webp", true, null);
-            HotelImage image9 = new HotelImage(null, "/img/9.webp", false, null);
-
-            List<Hotel> hotels = hotelRepository.findAllWithImagesAndFacilities();
-
-            Hotel hotel1 = hotels.get(0);
-            image1.setHotel(hotel1);
-            image2.setHotel(hotel1);
-            hotel1.getImages().addAll(List.of(image1, image2));
-
-            Hotel hotel2 = hotels.get(1);
-            image3.setHotel(hotel2);
-            image4.setHotel(hotel2);
-            hotel2.getImages().addAll(List.of(image3, image4));
-
-            Hotel hotel3 = hotels.get(2);
-            image5.setHotel(hotel3);
-            image6.setHotel(hotel3);
-            hotel3.getImages().addAll(List.of(image5, image6));
-
-            Hotel hotel4 = hotels.get(3);
-            image7.setHotel(hotel4);
-            hotel4.getImages().add(image7);
-
-            Hotel hotel5 = hotels.get(4);
-            image8.setHotel(hotel5);
-            image9.setHotel(hotel5);
-            hotel5.getImages().addAll(List.of(image8, image9));
-
-            hotelImageRepository.saveAll(List.of(image1, image2, image3, image4, image5,
-                    image6, image7, image8, image9));
-            hotelRepository.saveAll(List.of(hotel1, hotel2, hotel3, hotel4, hotel5));
-        }
-
-    }
-
     private void createRoles() {
         if (roleRepository.count() == 0) {
 
@@ -189,26 +152,6 @@ public class LoadData implements CommandLineRunner {
             userRepository.saveAll(List.of(admin, user));
 
             userRepository.saveAll(List.of(admin, user));
-        }
-    }
-
-    @Transactional
-    protected void createHotelFacilities() {
-        if (hotelFacilityRepository.count() == 0) {
-            List<Hotel> hotels = hotelRepository.findAllWithImagesAndFacilities();
-
-            HotelFacility wifi = new HotelFacility(null, "Free wi fi");
-            HotelFacility parking = new HotelFacility(null, "Free Parking");
-            HotelFacility pool = new HotelFacility(null, "Pool");
-            HotelFacility breakfast = new HotelFacility(null, "Breakfast");
-
-            hotelFacilityRepository.saveAll(List.of(wifi, parking, pool, breakfast));
-
-            for (Hotel hotel : hotels) {
-                hotel.getFacilities().addAll(List.of(wifi, parking, pool, breakfast));
-            }
-
-            hotelRepository.saveAll(hotels);
         }
     }
 
@@ -270,67 +213,182 @@ public class LoadData implements CommandLineRunner {
         return List.of(bed1, bed2, bed3, bed4, bed5);
     }
 
+    @Transactional
     private void createHotels() {
-
         if (hotelRepository.count() == 0) {
             City andijon = cityRepository.findByCode("andijon")
                     .orElseThrow(() -> new EntityNotFoundException("City", "Andijon"));
-
             City buxoro = cityRepository.findByCode("buxoro")
                     .orElseThrow(() -> new EntityNotFoundException("City", "Buxoro"));
-
             City fargona = cityRepository.findByCode("fargona")
                     .orElseThrow(() -> new EntityNotFoundException("City", "Fargona"));
-
             City jizzax = cityRepository.findByCode("jizzax")
                     .orElseThrow(() -> new EntityNotFoundException("City", "Jizzax"));
-
             City tashkent = cityRepository.findByCode("tashkent")
                     .orElseThrow(() -> new EntityNotFoundException("City", "Tashkent"));
+            City samarkand = cityRepository.findByCode("samarkand")
+                    .orElseThrow(() -> new EntityNotFoundException("City", "Samarkand"));
+            City namangan = cityRepository.findByCode("namangan")
+                    .orElseThrow(() -> new EntityNotFoundException("City", "Namangan"));
 
-            Hotel hotel1 = Hotel.builder()
-                    .name("National")
+            List<Hotel> hotels = new ArrayList<>();
+
+            // ANDIJON
+            hotels.add(Hotel.builder()
+                    .name("National Andijon")
                     .city(andijon)
-                    .description(
-                            "National Hotel offers a modern and minimalist design, located in the heart of Andijon. Enjoy a peaceful stay with top-notch amenities including free high-speed Wi-Fi, a state-of-the-art gym, and an exquisite rooftop restaurant.")
-                    .build();
+                    .address("12 Amir Temur Street, Andijon, Uzbekistan")
+                    .description("National Hotel offers modern design and rooftop restaurant in Andijon.")
+                    .build());
 
-            Hotel hotel2 = Hotel.builder()
-                    .name("Miracle")
+            hotels.add(Hotel.builder()
+                    .name("Andijon Palace")
+                    .city(andijon)
+                    .address("45 Bobur Avenue, Andijon, Uzbekistan")
+                    .description("Andijon Palace provides luxury rooms, conference halls, and a spa center.")
+                    .build());
+
+            // BUXORO
+            hotels.add(Hotel.builder()
+                    .name("Miracle Buxoro")
                     .city(buxoro)
-                    .description(
-                            "Miracle Hotel in Buxoro is renowned for its classic elegance and historic charm. Located near Buxoro's top landmarks, this luxury hotel provides spacious rooms, a world-class spa, and fine dining experiences.")
-                    .build();
+                    .address("8 Ismail Samani Street, Bukhara, Uzbekistan")
+                    .description("Classic elegance and historic charm with spa and fine dining.")
+                    .build());
 
-            Hotel hotel3 = Hotel.builder()
-                    .name("National Hotel")
-                    .city(tashkent)
-                    .description(
-                            "National Hotel is the best hotel build in Uzbekistan. A perfect blend of culture and comfort, guests can enjoy personalized services, tranquil gardens, and easy access to the city's ancient wonders.")
-                    .build();
+            hotels.add(Hotel.builder()
+                    .name("Silk Road Inn")
+                    .city(buxoro)
+                    .address("21 Khodja Nurobod Street, Bukhara, Uzbekistan")
+                    .description("Silk Road Inn is a boutique hotel with traditional Uzbek architecture and garden.")
+                    .build());
 
-            Hotel hotel4 = Hotel.builder()
-                    .name("City Palace")
-                    .description(
-                            "City Palace in Nukus offers a royal stay with luxurious interiors and top-of-the-line amenities. The hotel features an indoor pool, fine dining, and proximity to local museums and art galleries.")
-                    .city(tashkent)
-                    .build();
-
-            Hotel hotel5 = Hotel.builder()
-                    .name("Grand Plaza")
+            // FARGONA
+            hotels.add(Hotel.builder()
+                    .name("Grand Plaza Fargona")
                     .city(fargona)
-                    .description(
-                            "Grand Plaza in Fargona is a premier hotel for business and leisure travelers. With spacious conference rooms, a relaxing spa, and gourmet dining options, this hotel guarantees a refined stay for all guests.")
-                    .build();
+                    .address("99 Mustaqillik Street, Fergana, Uzbekistan")
+                    .description("Premier business hotel with conference rooms and spa.")
+                    .build());
 
-            Hotel hotel6 = Hotel.builder()
-                    .name("Golden Tulip")
+            hotels.add(Hotel.builder()
+                    .name("Fargona Oasis")
+                    .city(fargona)
+                    .address("15 Navoi Avenue, Fergana, Uzbekistan")
+                    .description("A relaxing oasis hotel with pool, fitness, and open-air restaurant.")
+                    .build());
+
+            // JIZZAX
+            hotels.add(Hotel.builder()
+                    .name("Golden Tulip Jizzax")
                     .city(jizzax)
-                    .description(
-                            "Golden Tulip is Jizzax's finest hotel, offering an elegant setting with modern accommodations. Guests can enjoy relaxing in the outdoor pool, savor fine international cuisine, and unwind at the hotel’s exclusive lounge.")
-                    .build();
+                    .address("30 Islam Karimov Street, Jizzakh, Uzbekistan")
+                    .description("Elegant modern hotel with outdoor pool and fine dining.")
+                    .build());
 
-            hotelRepository.saveAll(List.of(hotel1, hotel2, hotel3, hotel4, hotel5, hotel6));
+            hotels.add(Hotel.builder()
+                    .name("Jizzax Comfort")
+                    .city(jizzax)
+                    .address("18 Mustaqillik Avenue, Jizzakh, Uzbekistan")
+                    .description("Affordable comfort hotel with modern amenities and breakfast included.")
+                    .build());
+
+            // TASHKENT
+            hotels.add(Hotel.builder()
+                    .name("National Tashkent")
+                    .city(tashkent)
+                    .address("1 Amir Temur Avenue, Tashkent, Uzbekistan")
+                    .description("Blend of culture and comfort with tranquil gardens and personalized services.")
+                    .build());
+
+            hotels.add(Hotel.builder()
+                    .name("City Palace Tashkent")
+                    .city(tashkent)
+                    .address("56 Shakhrisabz Street, Tashkent, Uzbekistan")
+                    .description("Luxury hotel with indoor pool and proximity to art galleries.")
+                    .build());
+
+            hotels.add(Hotel.builder()
+                    .name("Uzbekistan Tower Hotel")
+                    .city(tashkent)
+                    .address("12 Navoi Avenue, Tashkent, Uzbekistan")
+                    .description("Modern skyscraper hotel with panoramic views and rooftop bar.")
+                    .build());
+
+            // SAMARKAND
+            hotels.add(Hotel.builder()
+                    .name("Registan View Hotel")
+                    .city(samarkand)
+                    .address("3 Registan Street, Samarkand, Uzbekistan")
+                    .description("Located near Registan Square, featuring oriental-style rooms and spa.")
+                    .build());
+
+            hotels.add(Hotel.builder()
+                    .name("Samarkand Heritage Inn")
+                    .city(samarkand)
+                    .address("22 Tashkent Road, Samarkand, Uzbekistan")
+                    .description("A boutique inn with traditional interiors and local cuisine.")
+                    .build());
+
+            // NAMANGAN
+            hotels.add(Hotel.builder()
+                    .name("Namangan Plaza")
+                    .city(namangan)
+                    .address("7 Babur Street, Namangan, Uzbekistan")
+                    .description("Modern business hotel with fitness center and meeting halls.")
+                    .build());
+
+            hotels.add(Hotel.builder()
+                    .name("Orchard Inn Namangan")
+                    .city(namangan)
+                    .address("25 Chust Road, Namangan, Uzbekistan")
+                    .description("Cozy family-friendly hotel surrounded by fruit gardens.")
+                    .build());
+
+            hotelRepository.saveAll(hotels);
         }
     }
+
+    @Transactional
+    protected void createHotelFacilities() {
+        if (hotelFacilityRepository.count() == 0) {
+
+            HotelFacility wifi = new HotelFacility(null, "Free WI-FI", "/img/wi-fi.png");
+            HotelFacility parking = new HotelFacility(null, "Free Parking", "/img/wi-fi.png");
+            HotelFacility pool = new HotelFacility(null, "Swimming Pool", "/img/wi-fi.png");
+            HotelFacility breakfast = new HotelFacility(null, "Breakfast", "/img/wi-fi.png");
+            HotelFacility spa = new HotelFacility(null, "Spa & Wellness Center", "/img/wi-fi.png");
+            HotelFacility gym = new HotelFacility(null, "Fitness Center", "/img/wi-fi.png");
+            HotelFacility bar = new HotelFacility(null, "Bar & Lounge", "/img/wi-fi.png");
+            HotelFacility restaurant = new HotelFacility(null, "Restaurant", "/img/wi-fi.png");
+            HotelFacility kidsClub = new HotelFacility(null, "Kids Club", "/img/wi-fi.png");
+            HotelFacility shuttle = new HotelFacility(null, "Airport Shuttle", "/img/wi-fi.png");
+            HotelFacility conference = new HotelFacility(null, "Conference Hall", "/img/wi-fi.png");
+
+            hotelFacilityRepository.saveAll(List.of(
+                    wifi, parking, pool, breakfast, spa, gym, bar, restaurant, kidsClub, shuttle, conference));
+
+            List<Hotel> hotels = hotelRepository.findAllWithImagesAndFacilities();
+
+            if (!hotels.isEmpty()) {
+                hotels.get(0).getFacilities().addAll(List.of(wifi, pool, gym, restaurant));
+                hotels.get(1).getFacilities().addAll(List.of(wifi, spa, conference, breakfast));
+                hotels.get(2).getFacilities().addAll(List.of(wifi, parking, bar, restaurant));
+                hotels.get(3).getFacilities().addAll(List.of(wifi, pool, breakfast, kidsClub));
+                hotels.get(4).getFacilities().addAll(List.of(wifi, spa, restaurant, bar, shuttle));
+                hotels.get(5).getFacilities().addAll(List.of(wifi, parking, breakfast));
+                hotels.get(6).getFacilities().addAll(List.of(wifi, pool, gym, conference, bar));
+                hotels.get(7).getFacilities().addAll(List.of(wifi, restaurant, kidsClub));
+                hotels.get(8).getFacilities().addAll(List.of(wifi, spa, pool, breakfast));
+                hotels.get(9).getFacilities().addAll(List.of(wifi, bar, restaurant, shuttle));
+                hotels.get(10).getFacilities().addAll(List.of(wifi, gym, conference, restaurant));
+                hotels.get(11).getFacilities().addAll(List.of(wifi, spa, pool));
+                hotels.get(12).getFacilities().addAll(List.of(wifi, breakfast, bar, kidsClub));
+                hotels.get(13).getFacilities().addAll(List.of(wifi, restaurant, parking));
+            }
+
+            hotelRepository.saveAll(hotels);
+        }
+    }
+
 }

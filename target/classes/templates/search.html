@@ -30,17 +30,19 @@
               alt="contact icon not seen">
           </button>
 
-          <button class="btn btn-secondary">
+          <buttn class="btn btn-secondary">
             List your property
-          </button>
+          </buttn>
 
-          <button class="btn btn-small btn-primary">
+          <a sec:authorize="isAnonymous()" class="btn btn-small btn-primary"
+            th:href="@{/auth/register}">
             Register
-          </button>
+          </a>
 
-          <button class="btn btn-small btn-primary">
+          <a sec:authorize="isAnonymous()" class="btn btn-small btn-primary"
+            th:href="@{/auth/login}">
             Login
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -104,7 +106,7 @@
           <div class="search-item">
             <img th:src="@{/img/user.png}" alt="user icon" class="icon">
             <input type="text" name="guests" id="guestInput"
-              value="2 adults · 0 children · 1 room"
+              value="2 adults · 0 children"
               readonly onclick="toggleGuestDropdown()">
 
             <div class="guest-dropdown" id="guestDropdown">
@@ -138,7 +140,7 @@
     </form>
 
     <div class="container2">
-      <!-- Левая колонка -->
+      <!-- Left Column -->
       <aside class="filters">
         <div class="filter-section">
           <h3>Popular Filters</h3>
@@ -159,7 +161,7 @@
 
         <div class="filter-section">
           <h3>Sort by</h3>
-          <select>
+          <select class="sort-select">
             <option value="recommended">Recommended</option>
             <option value="price-asc">Price (Lowest first)</option>
             <option value="price-desc">Price (Highest first)</option>
@@ -183,7 +185,11 @@
               <p th:text="${hotel.description}"></p>
               <p class="price" th:text="${hotel.price + ' UZS' }"></p>
 
-              <button class="btn btn-secondary">See availability</button>
+              <a class="btn btn-small btn-secondary"
+                th:href="@{/hotels/{hotelId}/see-rooms(hotelId = ${hotel.id})}">
+                See availability
+              </a>
+
             </div>
           </div>
         </main>
@@ -290,7 +296,7 @@
       </footer>
 
       <script>
-      let counts = { adults: 2, children: 0, rooms: 1 };
+      let counts = { adults: 2, children: 0};
 
       function toggleGuestDropdown() {
         document.getElementById('guestDropdown').style.display =

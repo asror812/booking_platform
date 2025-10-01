@@ -24,6 +24,9 @@ public class Hotel {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String address;
+
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
     private City city;

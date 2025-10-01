@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-28T17:15:01+0500",
+    date = "2025-10-01T17:09:01+0500",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
@@ -59,6 +59,7 @@ public class HotelMapperImpl implements HotelMapper {
 
         HotelResponseDTO hotelResponseDTO = new HotelResponseDTO();
 
+        hotelResponseDTO.setAddress( hotel.getAddress() );
         hotelResponseDTO.setCity( cityMapper.toResponseDTO( hotel.getCity() ) );
         hotelResponseDTO.setDescription( hotel.getDescription() );
         hotelResponseDTO.setFacilities( hotelFacilitySetToHotelFacilityResponseDTOSet( hotel.getFacilities() ) );

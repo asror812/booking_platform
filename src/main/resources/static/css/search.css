@@ -52,32 +52,47 @@ main,
 }
 
 .btn {
+  display: inline-block;
+  text-align: center;
+  font-weight: 600;
+  text-decoration: none;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-small {
-  padding: 8px 10px;
+  padding: 8px 12px;
   font-size: 14px;
-  width: 75px;
-  border-radius: 5px;
+  min-width: 80px;
+  border-radius: 6px;
 }
 
+
 .btn-primary {
-  background-color: white;
+  background-color: #ffffff;
   color: #014ec2;
-  border: 1px solid;
+  border: 1px solid #014ec2;
+}
+
+.btn-primary:hover {
+  background-color: #f0f6ff;
+  color: #002b6b;
+  border-color: #002b6b;
 }
 
 .btn-secondary {
   background-color: #003b95;
-  color: white;
-  font-size: 16px;
-  padding: 5px;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 8px 12px;
+  border: 1px solid #003b95;
+  border-radius: 6px;
 }
 
 .btn-secondary:hover {
-  background-color: #0243a5;
+  background-color: #014ec2;
+  border-color: #014ec2;
 }
 
 .site-name {
@@ -167,13 +182,21 @@ main,
   align-items: flex-start;
 }
 
+.sort-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  background-color: white;
+}
 
 .filters {
   flex: 0 0 250px;
   max-height: calc(100vh - 150px);
-  /* чтоб не выходило за экран */
   overflow-y: auto;
-  /* вертикальный скролл */
+
   position: sticky;
   top: 20px;
 }
@@ -193,7 +216,6 @@ main,
 
 .filter-section label {
   display: block;
-  /* чекбоксы в столбик */
   margin: 5px 0;
   font-size: 14px;
   color: #444;
@@ -213,7 +235,6 @@ main,
 /* Правая колонка — занимает остаток */
 .results {
   flex: 1;
-  /* растягивается на всё оставшееся */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -222,27 +243,6 @@ main,
 .results:empty {
   display: none;
 }
-
-/* .filters {
-  flex: 1 1 250px;
-  min-width: 150px;
-  background: #f8f8f8;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  height: fit-content;
-  align-items: flex-start;
-} */
-
-/* Правая колонка
-.results {
-  flex: 3 1 600px;
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-  */
 
 .hotel-card {
   border: 1px solid #ddd;
@@ -264,7 +264,7 @@ main,
 
 .hotel-info h4 {
   color: #003b95;
-  font-size: 18px;
+  font-size: 22px;
   margin: 0 0 10px;
   cursor: pointer;
 

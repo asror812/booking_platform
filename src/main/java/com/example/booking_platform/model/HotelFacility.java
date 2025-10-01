@@ -23,4 +23,7 @@ public class HotelFacility {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, name = "icon_url")
+    private String iconUrl;
+
 }

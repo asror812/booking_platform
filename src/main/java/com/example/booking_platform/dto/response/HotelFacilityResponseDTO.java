@@ -10,6 +10,8 @@ public class HotelFacilityResponseDTO {
 
     private String name;
 
+    private String iconUrl;
+
     @Override
     public String toString() {
         return name;

@@ -35,13 +35,15 @@
             List your property
           </button>
 
-          <button class="btn btn-small btn-primary">
+          <a sec:authorize="isAnonymous()" class="btn btn-small btn-primary"
+            th:href="@{/auth/register}">
             Register
-          </button>
+          </a>
 
-          <button class="btn btn-small btn-primary">
+          <a sec:authorize="isAnonymous()" class="btn btn-small btn-primary"
+            th:href="@{/auth/login}">
             Login
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -114,7 +116,7 @@
           <div class="search-item">
             <img th:src="@{/img/user.png}" alt="user icon" class="icon">
             <input type="text" name="guests" id="guestInput"
-              value="2 adults · 0 children · 1 room"
+              value="2 adults · 0 children"
               readonly onclick="toggleGuestDropdown()">
 
             <div class="guest-dropdown" id="guestDropdown">
@@ -390,7 +392,7 @@
     </footer>
 
     <script>
-      let counts = { adults: 2, children: 0, rooms: 1 };
+      let counts = { adults: 2, children: 0};
 
       function toggleGuestDropdown() {
         document.getElementById('guestDropdown').style.display =

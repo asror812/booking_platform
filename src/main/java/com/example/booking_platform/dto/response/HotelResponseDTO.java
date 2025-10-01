@@ -18,13 +18,15 @@ public class HotelResponseDTO {
 
     private String name;
 
+    private String address;
+
     private CityResponseDTO city;
+
+    private String description;
 
     private List<RoomTypeResponseDTO> roomTypes = new ArrayList<>();
 
     private Set<HotelFacilityResponseDTO> facilities = new HashSet<>();
-
-    private String description;
 
     private List<HotelImageResponseDTO> images = new ArrayList<>();
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.booking_platform.dto.request.UserSignUpDTO;
+import com.example.booking_platform.dto.request.UserSignUpRequestDTO;
 import com.example.booking_platform.exception.AlreadyRegisteredException;
 import com.example.booking_platform.model.Role;
 import com.example.booking_platform.model.User;
@@ -24,15 +24,8 @@ public class AuthService {
     private final RoleRepository roleRepository;
 
     @Transactional
-    public void register(UserSignUpDTO dto) {
-
-        if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new AlreadyRegisteredException("This username already taken");
-        }
-
-        if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new AlreadyRegisteredException("This email is already registred");
-        }
+    public void register(UserSignUpRequestDTO dto) {
+        checkCredentials(dto.getUsername(), dto.getEmail());
 
         Role role = roleRepository.findByName("USER")
                 .orElseThrow(() -> new EntityNotFoundException("User role not found"));
@@ -47,6 +40,16 @@ public class AuthService {
                 List.of(role));
 
         userRepository.save(user);
+    }
+
+    private void checkCredentials(String username, String email) {
+        if (userRepository.existsByUsername(username)) {
+            throw new AlreadyRegisteredException("username");
+        }
+
+        if (userRepository.existsByEmail(email)) {
+            throw new AlreadyRegisteredException("email");
+        }
     }
 
 }

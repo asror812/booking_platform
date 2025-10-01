@@ -3,15 +3,29 @@
   <head>
     <meta charset="UTF-8">
     <title>Login form</title>
-    <link rel="stylesheet" th:href="@{../../css/style.css}"
-      href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{../../css/auth.css}"
+      href="../../static/css/auth.css">
   </head>
   <body class="form-body">
-
     <div class="form-container">
-
       <h2>Login</h2>
-      <form class="login-form" th:action="@{/login}" th:method="post">
+
+      <div th:if="${param.error}">
+        <p th:switch="${param.error}">
+          <span th:case="'bad'" style="color:red;">
+            Invalid username or password
+          </span>
+          <span th:case="'locked'" style="color:red;">
+            Your account is locked
+          </span>
+          <span th:case="'disabled'" style="color:red;">
+            Your account is disabled
+          </span>
+          <span th:case="*">Login Failed</span>
+        </p>
+      </div>
+
+      <form class="login-form" th:action="@{/auth/login}" th:method="post">
         <input type="text" placeholder="Username" name="username">
         <input type="password" placeholder="Password" name="password">
         <input type="submit" value="Login">
@@ -20,8 +34,6 @@
       <div class="sign-up-link">
         <a th:href="@{/auth/register}">Sign up</a>
       </div>
-
     </div>
-
   </body>
 </html>

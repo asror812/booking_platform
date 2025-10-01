@@ -6,9 +6,6 @@ import com.example.booking_platform.dto.response.CityHotelSummaryDTO;
 import com.example.booking_platform.dto.response.CityResponseDTO;
 import com.example.booking_platform.dto.response.HotelResponseDTO;
 import com.example.booking_platform.dto.response.HotelSearchResponseDTO;
-import com.example.booking_platform.dto.response.RoomResponseDTO;
-import com.example.booking_platform.service.RoomService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HotelController {
 
     private final HotelService hotelService;
-    private final RoomService roomService;
     private final CityService cityService;
 
     @GetMapping
@@ -59,20 +55,12 @@ public class HotelController {
         return "search";
     }
 
-    @GetMapping("{id}/see-rooms")
-    public String getRoomsPage(@PathVariable Long id, Model model) {
-        HotelResponseDTO responseDTO = hotelService.getHotel(id);
-        model.addAttribute("hotel", responseDTO);
+    @GetMapping("/hotels/{id}/see-rooms")
+    public String getHotelAvailibilties(@PathVariable Long id, Model model) {
+        HotelResponseDTO dto = hotelService.getHotel(id);
+        model.addAttribute("hotel", dto);
 
-        return "hotel/rooms";
-    }
-
-    @GetMapping("/hotel/{id}/rooms")
-    public String getHotelRoomsPage(@PathVariable Long id, Model model) {
-        List<RoomResponseDTO> hotelRooms = roomService.getHotelRooms(id);
-
-        model.addAttribute("rooms", hotelRooms);
-        return "hotel/update";
+        return "see-rooms";
     }
 
 }
