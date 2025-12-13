@@ -1,22 +1,22 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
-      
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
   servlet:
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
-
 
   mvc:
     hiddenmethod:
@@ -25,4 +25,4 @@ spring:
 
   token:
     expiration: 86400
-    secretKey:  72d8fb249e2074c49166b401ede475acee909e8e272dbcd134dcdf744f000db3
+    secretKey: 72d8fb249e2074c49166b401ede475acee909e8e272dbcd134dcdf744f000db3

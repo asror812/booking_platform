@@ -5,21 +5,22 @@
     <title>Booking.com</title>
     <link rel="stylesheet" th:href="@{../css/search.css}"
       href="../static/css/search.css">
-
   </head>
+
+  <link rel="icon" type="image/png" th:href="@{/favicon.png}">
+
+  
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
   <body>
     <div class="header">
       <div class="container">
         <p class="site-name">Booking.com</p>
 
         <div class="btn-container">
-          <p class="concurrency">
-            UZS
-          </p>
+          <p class="concurrency">UZS</p>
 
           <button class="btn btn-icon">
             <img th:src="@{/img/usa.png}" alt="flag icon not seen" class="icon">
@@ -76,7 +77,21 @@
       </div>
     </div>
 
-    <form th:action="@{/search}" method="get" class="search-bar">
+    <div th:if="${error}" class="alert alert-danger"
+      style="
+          margin: 20px auto;
+          max-width: 1200px;
+          padding: 12px 16px;
+          background: #ffecec;
+          border: 1px solid #ffb3b3;
+          color: #a80000;
+          border-radius: 6px;
+          font-weight: 500;
+      ">
+        <span th:text="${error}"></span>
+    </div>
+
+    <form th:action="@{/results}" method="get" class="search-bar">
       <div class="search-items">
         <div class="search-items-scroll">
 
@@ -129,6 +144,9 @@
                     onclick="increment('children')">+</button>
                 </div>
               </div>
+
+              <input type="hidden" name="adults" id="adultsHidden" value="2">
+              <input type="hidden" name="children" id="childrenHidden" value="0">
 
               <button type="button" class="done-btn"
                 onclick="closeGuestDropdown()">Done</button>
@@ -295,40 +313,7 @@
         </div>
       </footer>
 
-      <script>
-      let counts = { adults: 2, children: 0};
-
-      function toggleGuestDropdown() {
-        document.getElementById('guestDropdown').style.display =
-          document.getElementById('guestDropdown').style.display === 'block'
-            ? 'none' : 'block';
-      }
-
-      function closeGuestDropdown() {
-        document.getElementById('guestDropdown').style.display = 'none';
-      }
-
-      function increment(type) {
-        counts[type]++;
-        updateDisplay();
-      }
-
-      function decrement(type) {
-        if (counts[type] > 0) {
-          counts[type]--;
-          updateDisplay();
-        }
-      }
-
-      function updateDisplay() {
-        document.getElementById('adultsCount').textContent = counts.adults;
-        document.getElementById('childrenCount').textContent = counts.children;
-
-        document.getElementById('guestInput').value =
-          `${counts.adults} adults · ${counts.children} children`;
-      }
-    </script>
-
       <script th:src="@{/js/search.js}"></script>
+      <script th:src="@{/js/guests.js}"></script>
     </body>
   </html>

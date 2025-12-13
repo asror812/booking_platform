@@ -524,3 +524,8 @@ main,
   height: 20px;
   object-fit: contain;
 }
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

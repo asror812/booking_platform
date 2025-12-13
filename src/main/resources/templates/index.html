@@ -7,6 +7,9 @@
       href="../static/css/style.css">
 
   </head>
+  <link rel="icon" type="image/png" th:href="@{/favicon.png}">
+
+
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -86,68 +89,75 @@
       </div>
     </div>
 
-    <form th:action="@{/search}" method="get" class="search-bar">
-      <div class="search-items">
-        <div class="search-items-scroll">
+    <form th:action="@{/results}" method="get" class="search-bar">
+  
+  <!-- ERROR MESSAGE BANNER -->
+  <div th:if="${error}" class="error-banner">
+    <span th:text="${error}"></span>
+  </div>
+  
+  <div class="search-items">
+    <div class="search-items-scroll">
 
-          <div class="search-item">
-            <img th:src="@{/img/bed.png}" alt="bed icon" class="icon">
-            <select name="cityId" class="destination-select" required>
-              <option value disabled selected>Where are you going?</option>
-              <option th:each="city: ${cities}"
-                th:value="${city.id}"
-                th:text="${city.name}">
-              </option>
-            </select>
-          </div>
+      <div class="search-item">
+        <img th:src="@{/img/bed.png}" alt="bed icon" class="icon">
+        <select name="cityId" class="destination-select" required>
+          <option value disabled selected>Where are you going?</option>
+          <option th:each="city: ${cities}"
+            th:value="${city.id}"
+            th:text="${city.name}">
+          </option>
+        </select>
+      </div>
 
-          <div class="search-item">
-            <img th:src="@{/img/calendar.png}" alt="calendar icon" class="icon">
-            <input type="text" class="date-input" id="datePicker1"
-              name="checkIn" required placeholder="dd-MM-yyyy">
-          </div>
+      <div class="search-item">
+        <img th:src="@{/img/calendar.png}" alt="calendar icon" class="icon">
+        <input type="text" class="date-input" id="datePicker1"
+          name="checkIn" required placeholder="dd-MM-yyyy">
+      </div>
 
-          <div class="search-item">
-            <img th:src="@{/img/calendar.png}" alt="calendar icon" class="icon">
-            <input type="text" class="date-input" id="datePicker2"
-              name="checkOut" required placeholder="dd-MM-yyyy">
-          </div>
+      <div class="search-item">
+        <img th:src="@{/img/calendar.png}" alt="calendar icon" class="icon">
+        <input type="text" class="date-input" id="datePicker2"
+          name="checkOut" required placeholder="dd-MM-yyyy">
+      </div>
 
-          <div class="search-item">
-            <img th:src="@{/img/user.png}" alt="user icon" class="icon">
-            <input type="text" name="guests" id="guestInput"
-              value="2 adults · 0 children"
-              readonly onclick="toggleGuestDropdown()">
+      <div class="search-item">
+        <img th:src="@{/img/user.png}" alt="user icon" class="icon">
+        <input type="text" name="guests" id="guestInput"
+          value="2 adults · 0 children"
+          readonly onclick="toggleGuestDropdown()">
 
-            <div class="guest-dropdown" id="guestDropdown">
-              <div class="guest-item">
-                <span>Adults</span>
-                <div class="guest-controls">
-                  <button type="button" onclick="decrement('adults')">-</button>
-                  <span id="adultsCount">2</span>
-                  <button type="button" onclick="increment('adults')">+</button>
-                </div>
-              </div>
-
-              <div class="guest-item">
-                <span>Children</span>
-                <div class="guest-controls">
-                  <button type="button"
-                    onclick="decrement('children')">-</button>
-                  <span id="childrenCount">0</span>
-                  <button type="button"
-                    onclick="increment('children')">+</button>
-                </div>
-              </div>
-
-              <button type="button" class="done-btn"
-                onclick="closeGuestDropdown()">Done</button>
+        <div class="guest-dropdown" id="guestDropdown">
+          <div class="guest-item">
+            <span>Adults</span>
+            <div class="guest-controls">
+              <button type="button" onclick="decrement('adults')" aria-label="Decrease adults">−</button>
+              <span id="adultsCount">2</span>
+              <button type="button" onclick="increment('adults')" aria-label="Increase adults">+</button>
             </div>
           </div>
+
+          <div class="guest-item">
+            <span>Children</span>
+            <div class="guest-controls">
+              <button type="button" onclick="decrement('children')" aria-label="Decrease children">−</button>
+              <span id="childrenCount">0</span>
+              <button type="button" onclick="increment('children')" aria-label="Increase children">+</button>
+            </div>
+          </div>
+
+          <input type="hidden" name="adults" id="adultsHidden" value="2">
+          <input type="hidden" name="children" id="childrenHidden" value="0">
+
+          <button type="button" class="done-btn"
+            onclick="closeGuestDropdown()">Done</button>
         </div>
       </div>
-      <button type="submit" class="search-btn">Search</button>
-    </form>
+    </div>
+  </div>
+  <button type="submit" class="search-btn">Search</button>
+</form>
 
     <section class="why-section">
       <div class="why-header">
@@ -391,40 +401,8 @@
       </div>
     </footer>
 
-    <script>
-      let counts = { adults: 2, children: 0};
-
-      function toggleGuestDropdown() {
-        document.getElementById('guestDropdown').style.display =
-          document.getElementById('guestDropdown').style.display === 'block'
-            ? 'none' : 'block';
-      }
-
-      function closeGuestDropdown() {
-        document.getElementById('guestDropdown').style.display = 'none';
-      }
-
-      function increment(type) {
-        counts[type]++;
-        updateDisplay();
-      }
-
-      function decrement(type) {
-        if (counts[type] > 0) {
-          counts[type]--;
-          updateDisplay();
-        }
-      }
-
-      function updateDisplay() {
-        document.getElementById('adultsCount').textContent = counts.adults;
-        document.getElementById('childrenCount').textContent = counts.children;
-
-        document.getElementById('guestInput').value =
-          `${counts.adults} adults · ${counts.children} children`;
-      }
-
-    </script>
+    <script th:src="@{/js/guests.js}"></script>
+    <script th:src="@{/js/search.js}"></script>
 
   </body>
 </html>

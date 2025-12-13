@@ -36,8 +36,6 @@ updateScene();
 window.addEventListener('resize', updateScene)
 
 
-
-
 const today = new Date();
 
 const datePicker1 = flatpickr("#datePicker1", {

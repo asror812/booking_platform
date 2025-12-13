@@ -1,16 +1,22 @@
-
 const today = new Date();
+
+const tomorrow = new Date(today);
+tomorrow.setDate(tomorrow.getDate() + 1);
 
 const datePicker1 = flatpickr("#datePicker1", {
   dateFormat: "d-m-Y",
   altInput: true,
   altFormat: "d M Y",
   minDate: today,
+
   onChange: function (selectedDates) {
     if (selectedDates.length > 0) {
-      datePicker2.set("minDate", selectedDates[0]);
+      const minCheckout = new Date(selectedDates[0]);
+      minCheckout.setDate(minCheckout.getDate() + 1);
+
+      datePicker2.set("minDate", minCheckout);
     } else {
-      datePicker2.set("minDate", today);
+      datePicker2.set("minDate", tomorrow);
     }
   }
 });
@@ -19,31 +25,16 @@ const datePicker2 = flatpickr("#datePicker2", {
   dateFormat: "d-m-Y",
   altInput: true,
   altFormat: "d M Y",
-  minDate: today,
+  minDate: tomorrow,
+
   onChange: function (selectedDates) {
     if (selectedDates.length > 0) {
-      datePicker1.set("maxDate", selectedDates[0]);
+      const maxCheckin = new Date(selectedDates[0]);
+      maxCheckin.setDate(maxCheckin.getDate() - 1);
+
+      datePicker1.set("maxDate", maxCheckin);
     } else {
       datePicker1.set("maxDate", null);
     }
-  }
-});
-
-const form = document.querySelector("form");
-const checkIn = document.getElementById("datePicker1");
-const checkOut = document.getElementById("datePicker2");
-
-form.addEventListener("submit", function (e) {
-  checkIn.setCustomValidity("");
-  checkOut.setCustomValidity("");
-
-  if (!datePicker1.selectedDates.length) {
-    e.preventDefault();
-    checkIn.setCustomValidity("Please select a check-in date");
-    checkIn.reportValidity();
-  } else if (!datePicker2.selectedDates.length) {
-    e.preventDefault();
-    checkOut.setCustomValidity("Please select a check-out date");
-    checkOut.reportValidity();
   }
 });
