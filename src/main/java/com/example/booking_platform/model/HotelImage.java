@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,6 @@ import lombok.Setter;
 @Table(name = "hotel_images")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class HotelImage {
     @Id
@@ -34,4 +32,10 @@ public class HotelImage {
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
+
+    public HotelImage(String imageUrl, boolean isMain, Hotel hotel) {
+        this.imageUrl = imageUrl;
+        this.isMain = isMain;
+        this.hotel = hotel;
+    }
 }

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-13T22:53:19+0500",
+    date = "2026-01-07T01:17:53+0500",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
 )
 @Component
@@ -40,9 +40,9 @@ public class HotelMapperImpl implements HotelMapper {
 
         HotelSearchResponseDTO hotelSearchResponseDTO = new HotelSearchResponseDTO();
 
-        hotelSearchResponseDTO.setDescription( hotel.getDescription() );
         hotelSearchResponseDTO.setId( hotel.getId() );
         hotelSearchResponseDTO.setName( hotel.getName() );
+        hotelSearchResponseDTO.setDescription( hotel.getDescription() );
 
         hotelSearchResponseDTO.setFacilities( mapFacilities(hotel.getFacilities()) );
 
@@ -59,16 +59,29 @@ public class HotelMapperImpl implements HotelMapper {
 
         HotelResponseDTO hotelResponseDTO = new HotelResponseDTO();
 
+        hotelResponseDTO.setId( hotel.getId() );
+        hotelResponseDTO.setName( hotel.getName() );
         hotelResponseDTO.setAddress( hotel.getAddress() );
         hotelResponseDTO.setCity( cityMapper.toResponseDTO( hotel.getCity() ) );
         hotelResponseDTO.setDescription( hotel.getDescription() );
-        hotelResponseDTO.setFacilities( hotelFacilitySetToHotelFacilityResponseDTOSet( hotel.getFacilities() ) );
-        hotelResponseDTO.setId( hotel.getId() );
-        hotelResponseDTO.setImages( hotelImageListToHotelImageResponseDTOList( hotel.getImages() ) );
-        hotelResponseDTO.setName( hotel.getName() );
         hotelResponseDTO.setRoomTypes( roomTypeListToRoomTypeResponseDTOList( hotel.getRoomTypes() ) );
+        hotelResponseDTO.setFacilities( hotelFacilitySetToHotelFacilityResponseDTOSet( hotel.getFacilities() ) );
+        hotelResponseDTO.setImages( hotelImageListToHotelImageResponseDTOList( hotel.getImages() ) );
 
         return hotelResponseDTO;
+    }
+
+    protected List<RoomTypeResponseDTO> roomTypeListToRoomTypeResponseDTOList(List<RoomType> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<RoomTypeResponseDTO> list1 = new ArrayList<RoomTypeResponseDTO>( list.size() );
+        for ( RoomType roomType : list ) {
+            list1.add( roomTypeMapper.toResponseDTO( roomType ) );
+        }
+
+        return list1;
     }
 
     protected Set<HotelFacilityResponseDTO> hotelFacilitySetToHotelFacilityResponseDTOSet(Set<HotelFacility> set) {
@@ -105,19 +118,6 @@ public class HotelMapperImpl implements HotelMapper {
         List<HotelImageResponseDTO> list1 = new ArrayList<HotelImageResponseDTO>( list.size() );
         for ( HotelImage hotelImage : list ) {
             list1.add( hotelImageToHotelImageResponseDTO( hotelImage ) );
-        }
-
-        return list1;
-    }
-
-    protected List<RoomTypeResponseDTO> roomTypeListToRoomTypeResponseDTOList(List<RoomType> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<RoomTypeResponseDTO> list1 = new ArrayList<RoomTypeResponseDTO>( list.size() );
-        for ( RoomType roomType : list ) {
-            list1.add( roomTypeMapper.toResponseDTO( roomType ) );
         }
 
         return list1;

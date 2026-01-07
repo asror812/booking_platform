@@ -3,12 +3,10 @@ package com.example.booking_platform.model;
 import java.util.UUID;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -28,4 +26,10 @@ public class Bed {
     @ManyToOne
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
+
+    public Bed(String type, Integer count, RoomType roomType) {
+        this.type = type;
+        this.count = count;
+        this.roomType = roomType;
+    }
 }

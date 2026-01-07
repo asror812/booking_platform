@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-13T22:53:19+0500",
+    date = "2026-01-07T01:16:35+0500",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
 )
 @Component
@@ -29,11 +29,11 @@ public class RoomTypeMapperImpl implements RoomTypeMapper {
 
         RoomTypeResponseDTO roomTypeResponseDTO = new RoomTypeResponseDTO();
 
-        roomTypeResponseDTO.setCapacity( roomType.getCapacity() );
         roomTypeResponseDTO.setId( roomType.getId() );
+        roomTypeResponseDTO.setTypeName( roomType.getTypeName() );
+        roomTypeResponseDTO.setCapacity( roomType.getCapacity() );
         roomTypeResponseDTO.setPricePerDay( roomType.getPricePerDay() );
         roomTypeResponseDTO.setRoomFacilities( roomFacilitySetToRoomFacilityResponseDTOSet( roomType.getRoomFacilities() ) );
-        roomTypeResponseDTO.setTypeName( roomType.getTypeName() );
 
         return roomTypeResponseDTO;
     }

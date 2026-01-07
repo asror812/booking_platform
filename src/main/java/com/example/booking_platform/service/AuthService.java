@@ -33,7 +33,6 @@ public class AuthService {
         String password = passwordEncoder.encode(dto.getPassword());
 
         User user = new User(
-                null,
                 dto.getUsername(),
                 password,
                 dto.getEmail(),

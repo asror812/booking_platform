@@ -43,6 +43,9 @@ public class HotelController {
             @RequestParam int children,
             Model model) {
 
+        List<CityResponseDTO> cities = cityService.getAllCities();
+        model.addAttribute("cities", cities);
+
         List<HotelSearchResponseDTO> results = hotelService.search(
                 cityId, checkIn, checkOut, adults, children);
 

@@ -1,7 +1,6 @@
 package com.example.booking_platform.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -44,6 +42,17 @@ public class RoomType {
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
+
+    public RoomType(String typeName, Integer capacity, Long pricePerDay, Set<RoomFacility> roomFacilities,
+            List<Room> rooms, List<Bed> beds, Hotel hotel) {
+        this.typeName = typeName;
+        this.capacity = capacity;
+        this.pricePerDay = pricePerDay;
+        this.roomFacilities = roomFacilities;
+        this.rooms = rooms;
+        this.beds = beds;
+        this.hotel = hotel;
+    }
 }
 
 // hotel facility, room facility, bed type are globally defined

@@ -6,7 +6,6 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,5 +26,11 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
+
+    public Room(Integer number, RoomType roomType, Hotel hotel) {
+        this.number = number;
+        this.roomType = roomType;
+        this.hotel = hotel;
+    }
 
 }

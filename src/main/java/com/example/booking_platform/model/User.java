@@ -1,7 +1,6 @@
 package com.example.booking_platform.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -40,6 +38,13 @@ public class User implements UserDetails {
             @JoinColumn(name = "role_id") })
     private List<Role> roles;
 
+    public User(String username, String password, String email, List<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -49,5 +54,7 @@ public class User implements UserDetails {
 
         return authorities;
     }
+
+    
 
 }

@@ -1,13 +1,11 @@
 package com.example.booking_platform.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -25,5 +23,10 @@ public class HotelFacility {
 
     @Column(nullable = false, name = "icon_url")
     private String iconUrl;
+
+    public HotelFacility(String name, String iconUrl) {
+        this.name = name;
+        this.iconUrl = iconUrl;
+    }
 
 }

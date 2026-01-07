@@ -10,13 +10,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -37,4 +35,11 @@ public class City {
 
     @OneToMany(mappedBy = "city")
     private List<Hotel> hotels;
+
+    public City(String name, String code, String imageUrl, List<Hotel> hotels) {
+        this.name = name;
+        this.code = code;
+        this.imageUrl = imageUrl;
+        this.hotels = hotels;
+    }
 }
